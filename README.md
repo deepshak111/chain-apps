@@ -1,4 +1,4 @@
-1. PROBLEM STATEMENT
+1. PROBLEM STATEMENT:
 Many businesses in sectors like hospitality, finance, entertainment, and retail still depend on manual processes or expensive centralized software platforms. This causes several challenges:
 Slow customer service
 High operational costs
@@ -9,7 +9,7 @@ Limited digital tools for small businesses
 Additionally, traditional cloud infrastructure and databases increase costs and reduce technological self-reliance.
 Therefore, there is a need for a secure, scalable, and cost-effective platform that provides automation, customer interaction, and decentralized data management.
 
-2. SOLUTION
+2. SOLUTION:
 The solution is a decentralized cloud automation platform that integrates:
 AI chatbot for customer interaction
 Automated workflows for business operations
@@ -19,7 +19,7 @@ On-chain data storage
 
 The platform runs on the Internet Computer, eliminating the need for traditional cloud services.
 
-3. IDEA
+3. IDEA:
 The idea is to create a unified business platform where companies can manage customer interactions, bookings, and business operations through automation.
 
 Instead of using multiple systems such as:
@@ -32,7 +32,7 @@ the platform combines everything into a single decentralized application.
 
 This supports self-reliance, lower operational cost, and improved data security.
 
-4. FEATURES
+4. FEATURES:
 
 AI Chatbot Interaction:
 Handles customer queries
@@ -60,7 +60,7 @@ Monitor sales
 Track bookings
 Analyze business performance
 
-5. ARCHITECTURE
+5. ARCHITECTURE:
 
 System architecture consists of several layers:
 
@@ -105,7 +105,7 @@ On-chain persistent storage
 
 No external SQL databases are required.
 
-6. WORKFLOW
+6. WORKFLOW:
 
 Step 1
 User opens the web application.
@@ -131,7 +131,7 @@ Data is stored in stable memory on the blockchain.
 Step 8
 Frontend dashboard displays results.
 
-7. FLOWCHART
+7. FLOWCHART:
 
 Start
 ↓
@@ -151,7 +151,7 @@ Update Dashboard
 ↓
 End
 
-8. TECH STACK
+8. TECH STACK:
 
 Frontend
 
@@ -176,7 +176,7 @@ Data Storage — Motoko Stable Variables
 Structures — HashMaps
 Infrastructure — ICP Canisters
 
-9. SECURITY
+9. SECURITY:
 
 Decentralized Authentication
 Login handled by Internet Identity.
