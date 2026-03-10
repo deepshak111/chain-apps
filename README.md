@@ -64,7 +64,7 @@ Analyze business performance
 
 System architecture consists of several layers:
 
-1. FRONTEND LAYER
+1. FRONTEND LAYER:
 User interface built with:
 React
 TypeScript
@@ -77,7 +77,7 @@ Chatbot interface
 Business dashboard
 Customer interaction
 
-2. BACKEND LAYER
+2. BACKEND LAYER:
 Backend logic is written in:
 Motoko
 
@@ -88,7 +88,7 @@ business automation
 chatbot processing
 workflow management
 
-3. PLATFORM LAYER
+3. PLATFORM LAYER:
 Infrastructure powered by:
 Internet Computer
 
@@ -97,7 +97,7 @@ Canisters (smart contract containers)
 On-chain computation
 Distributed hosting
 
-4. STORAGE LAYER
+4. STORAGE LAYER:
 Data stored using:
 Motoko stable variables
 HashMaps
@@ -107,28 +107,28 @@ No external SQL databases are required.
 
 6. WORKFLOW:
 
-Step 1
+Step 1:
 User opens the web application.
 
-Step 2
+Step 2:
 User logs in using Internet Identity authentication.
 
-Step 3
+Step 3:
 User interacts with the chatbot or dashboard.
 
-Step 4
+Step 4:
 Frontend sends the request to backend canisters.
 
-Step 5
+Step 5:
 Motoko backend processes the request.
 
-Step 6
+Step 6:
 Business logic runs automation tasks.
 
-Step 7
+Step 7:
 Data is stored in stable memory on the blockchain.
 
-Step 8
+Step 8::
 Frontend dashboard displays results.
 
 7. FLOWCHART:
@@ -151,9 +151,9 @@ Update Dashboard
 ↓
 End
 
-8. TECH STACK:
+8. TECH STACK
 
-Frontend
+Frontend:
 
 Component — Technology
 Framework — React
@@ -162,14 +162,14 @@ Styling — Tailwind CSS
 UI Components — shadcn/ui
 Build Tool — Vite
 
-Backend
+Backend:
 
 Component — Technology
 Language — Motoko
 Platform — Internet Computer
 Authentication — Internet Identity
 
-Storage
+Storage:
 
 Component — Technology
 Data Storage — Motoko Stable Variables
