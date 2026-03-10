@@ -1,214 +1,194 @@
-/**
- * Utility functions for parsing and managing URL parameters
- * Works with both hash-based and browser-based routing
- */
+1. PROBLEM STATEMENT
+Many businesses in sectors like hospitality, finance, entertainment, and retail still depend on manual processes or expensive centralized software platforms. This causes several challenges:
+Slow customer service
+High operational costs
+Dependence on third-party cloud providers
+Data privacy and security risks
+Limited digital tools for small businesses
 
-/**
- * Extracts a URL parameter from the current URL
- * Works with both query strings (?param=value) and hash-based routing (#/?param=value)
- *
- * @param paramName - The name of the parameter to extract
- * @returns The parameter value if found, null otherwise
- */
-export function getUrlParameter(paramName: string): string | null {
-  // Try to get from regular query string first
-  const urlParams = new URLSearchParams(window.location.search);
-  const regularParam = urlParams.get(paramName);
+Additionally, traditional cloud infrastructure and databases increase costs and reduce technological self-reliance.
+Therefore, there is a need for a secure, scalable, and cost-effective platform that provides automation, customer interaction, and decentralized data management.
 
-  if (regularParam !== null) {
-    return regularParam;
-  }
+2. SOLUTION
+The solution is a decentralized cloud automation platform that integrates:
+AI chatbot for customer interaction
+Automated workflows for business operations
+Blockchain-based backend infrastructure
+Secure decentralized authentication
+On-chain data storage
 
-  // If not found, try to extract from hash (for hash-based routing)
-  const hash = window.location.hash;
-  const queryStartIndex = hash.indexOf("?");
+The platform runs on the Internet Computer, eliminating the need for traditional cloud services.
 
-  if (queryStartIndex !== -1) {
-    const hashQuery = hash.substring(queryStartIndex + 1);
-    const hashParams = new URLSearchParams(hashQuery);
-    return hashParams.get(paramName);
-  }
+3. IDEA
+The idea is to create a unified business platform where companies can manage customer interactions, bookings, and business operations through automation.
 
-  return null;
-}
+Instead of using multiple systems such as:
+customer support tools
+booking software
+cloud hosting services
+databases
 
-/**
- * Stores a parameter in sessionStorage for persistence across navigation
- * Useful for maintaining state like admin tokens throughout the session
- *
- * @param key - The key to store the value under
- * @param value - The value to store
- */
-export function storeSessionParameter(key: string, value: string): void {
-  try {
-    sessionStorage.setItem(key, value);
-  } catch (error) {
-    console.warn(`Failed to store session parameter ${key}:`, error);
-  }
-}
+the platform combines everything into a single decentralized application.
 
-/**
- * Retrieves a parameter from sessionStorage
- *
- * @param key - The key to retrieve
- * @returns The stored value if found, null otherwise
- */
-export function getSessionParameter(key: string): string | null {
-  try {
-    return sessionStorage.getItem(key);
-  } catch (error) {
-    console.warn(`Failed to retrieve session parameter ${key}:`, error);
-    return null;
-  }
-}
+This supports self-reliance, lower operational cost, and improved data security.
 
-/**
- * Gets a parameter from URL or sessionStorage (URL takes precedence)
- * If found in URL, also stores it in sessionStorage for future use
- *
- * @param paramName - The name of the parameter to retrieve
- * @param storageKey - Optional custom storage key (defaults to paramName)
- * @returns The parameter value if found, null otherwise
- */
-export function getPersistedUrlParameter(
-  paramName: string,
-  storageKey?: string,
-): string | null {
-  const key = storageKey || paramName;
+4. FEATURES
 
-  // Check URL first
-  const urlValue = getUrlParameter(paramName);
-  if (urlValue !== null) {
-    // Store in session for persistence
-    storeSessionParameter(key, urlValue);
-    return urlValue;
-  }
+AI Chatbot Interaction:
+Handles customer queries
+Provides booking and service assistance
+Works 24/7
 
-  // Fall back to session storage
-  return getSessionParameter(key);
-}
+Business Automation:
+Booking confirmations
+Invoice generation
+Notifications and updates
+Automated workflows
 
-/**
- * Removes a parameter from sessionStorage
- *
- * @param key - The key to remove
- */
-export function clearSessionParameter(key: string): void {
-  try {
-    sessionStorage.removeItem(key);
-  } catch (error) {
-    console.warn(`Failed to clear session parameter ${key}:`, error);
-  }
-}
+Decentralized Cloud Infrastructure:
+Runs on blockchain-based cloud platform
+Eliminates dependency on centralized servers
 
-/**
- * Removes a specific parameter from the URL hash without reloading the page
- * Preserves route information and other parameters in the hash
- * Used to remove sensitive data from the address bar after extracting it
- *
- * @param paramName - The parameter to remove from the hash
- *
- * @example
- * // URL: https://app.com/#/dashboard?caffeineAdminToken=xxx&other=value
- * // After clearParamFromHash('caffeineAdminToken')
- * // URL: https://app.com/#/dashboard?other=value
- */
-function clearParamFromHash(paramName: string): void {
-  if (!window.history.replaceState) {
-    return;
-  }
+Secure Authentication:
+Uses Internet Identity for login.
 
-  const hash = window.location.hash;
-  if (!hash || hash.length <= 1) {
-    return;
-  }
+On-Chain Data Storage:
+Business data stored securely on the blockchain.
 
-  // Remove the leading #
-  const hashContent = hash.substring(1);
+Business Dashboard:
+Monitor sales
+Track bookings
+Analyze business performance
 
-  // Split route path from query string
-  const queryStartIndex = hashContent.indexOf("?");
+5. ARCHITECTURE
 
-  if (queryStartIndex === -1) {
-    // No query string in hash, nothing to remove
-    return;
-  }
+System architecture consists of several layers:
 
-  const routePath = hashContent.substring(0, queryStartIndex);
-  const queryString = hashContent.substring(queryStartIndex + 1);
+1. FRONTEND LAYER
+User interface built with:
+React
+TypeScript
+Tailwind CSS
+shadcn/ui
+Vite
 
-  // Parse and remove the specific parameter
-  const params = new URLSearchParams(queryString);
-  params.delete(paramName);
+This layer handles:
+Chatbot interface
+Business dashboard
+Customer interaction
 
-  // Reconstruct the URL
-  const newQueryString = params.toString();
-  let newHash = routePath;
+2. BACKEND LAYER
+Backend logic is written in:
+Motoko
 
-  if (newQueryString) {
-    newHash += `?${newQueryString}`;
-  }
+It runs inside ICP canisters, which act as smart contract containers.
 
-  // If we still have content in the hash, keep it; otherwise remove the hash entirely
-  const newUrl =
-    window.location.pathname +
-    window.location.search +
-    (newHash ? `#${newHash}` : "");
-  window.history.replaceState(null, "", newUrl);
-}
+Functions include:
+business automation
+chatbot processing
+workflow management
 
-/**
- * Gets a secret from the URL hash fragment only (more secure than query params)
- * Hash fragments aren't sent to servers or logged in access logs
- * The hash is immediately cleared from the URL after extraction to prevent history leakage
- *
- * Usage: https://yourapp.com/#secret=xxx
- *
- * @param paramName - The name of the secret parameter
- * @returns The secret value if found (from hash or session), null otherwise
- */
-export function getSecretFromHash(paramName: string): string | null {
-  // Check session first to avoid unnecessary URL manipulation
-  const existingSecret = getSessionParameter(paramName);
-  if (existingSecret !== null) {
-    return existingSecret;
-  }
+3. PLATFORM LAYER
+Infrastructure powered by:
+Internet Computer
 
-  // Try to extract from hash
-  const hash = window.location.hash;
-  if (!hash || hash.length <= 1) {
-    return null;
-  }
+Key elements:
+Canisters (smart contract containers)
+On-chain computation
+Distributed hosting
 
-  // Remove the leading #
-  const hashContent = hash.substring(1);
-  const params = new URLSearchParams(hashContent);
-  const secret = params.get(paramName);
+4. STORAGE LAYER
+Data stored using:
+Motoko stable variables
+HashMaps
+On-chain persistent storage
 
-  if (secret) {
-    // Store in session for persistence
-    storeSessionParameter(paramName, secret);
-    // Immediately clear the secret parameter from URL to avoid history leakage
-    clearParamFromHash(paramName);
-    return secret;
-  }
+No external SQL databases are required.
 
-  return null;
-}
+6. WORKFLOW
 
-/**
- * Gets a secret parameter with fallback chain: hash -> sessionStorage
- * This is the recommended way to handle sensitive parameters like admin tokens
- *
- * Security benefits over regular URL params:
- * - Hash fragments are not sent to the server
- * - Not logged in server access logs
- * - Not sent in HTTP Referer headers
- * - Automatically cleared from URL after extraction
- *
- * @param paramName - The name of the secret parameter
- * @returns The secret value if found, null otherwise
- */
-export function getSecretParameter(paramName: string): string | null {
-  return getSecretFromHash(paramName);
-}
+Step 1
+User opens the web application.
+
+Step 2
+User logs in using Internet Identity authentication.
+
+Step 3
+User interacts with the chatbot or dashboard.
+
+Step 4
+Frontend sends the request to backend canisters.
+
+Step 5
+Motoko backend processes the request.
+
+Step 6
+Business logic runs automation tasks.
+
+Step 7
+Data is stored in stable memory on the blockchain.
+
+Step 8
+Frontend dashboard displays results.
+
+7. FLOWCHART
+
+Start
+↓
+User Login (Internet Identity)
+↓
+User Request / Chatbot Interaction
+↓
+Frontend sends request to backend
+↓
+Motoko Canister Processes Logic
+↓
+Automation Task Executed
+↓
+Store Data in On-Chain Storage
+↓
+Update Dashboard
+↓
+End
+
+8. TECH STACK
+
+Frontend
+
+Component — Technology
+Framework — React
+Language — TypeScript
+Styling — Tailwind CSS
+UI Components — shadcn/ui
+Build Tool — Vite
+
+Backend
+
+Component — Technology
+Language — Motoko
+Platform — Internet Computer
+Authentication — Internet Identity
+
+Storage
+
+Component — Technology
+Data Storage — Motoko Stable Variables
+Structures — HashMaps
+Infrastructure — ICP Canisters
+
+9. SECURITY
+
+Decentralized Authentication
+Login handled by Internet Identity.
+
+Data Integrity
+Data stored directly on blockchain ensuring immutability.
+
+Secure Smart Contracts
+Backend logic executed within ICP canisters.
+
+Isolation Architecture
+Each module runs independently to protect sensitive data.
+
+Encryption
+Secure communication between frontend and backend.
